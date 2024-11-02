@@ -8,54 +8,54 @@ import org.springframework.http.HttpMethod;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import com.example.testclientapp.entity.Region;
+import com.example.testclientapp.entity.Country;
 
 import java.util.List;
 
 @Service
 @Slf4j
-public class RegionService {
+public class CountryService {
 
-    @Value("${server.base.url}/regions") 
+    @Value("${server.base.url}/countries") 
     private String url;
 
     @Autowired
     private RestTemplate restTemplate;
 
-    public List<Region> getAll() {
+    public List<Country> getAll() {
         return restTemplate
             .exchange(
                 url,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<Region>>() {}
+                new ParameterizedTypeReference<List<Country>>() {}
             )
             .getBody();
     }
 
-    public Region getById(Integer id) {
-        log.info("Fetching region from endpoint: {}", url.concat("/" + id));
+    public Country getById(Integer id) {
+        log.info("Fetching country from endpoint: {}", url.concat("/" + id));
 
         return restTemplate
-            .exchange(url.concat("/" + id), HttpMethod.GET, null, Region.class)
+            .exchange(url.concat("/" + id), HttpMethod.GET, null, Country.class)
             .getBody();
     }
 
-    public Region create(Region region) {
+    public Country create(Country country) {
         return restTemplate
             .exchange(
                 url,
                 HttpMethod.POST,
-                new HttpEntity<>(region),
-                new ParameterizedTypeReference<Region>() {}
+                new HttpEntity<>(country),
+                new ParameterizedTypeReference<Country>() {}
             )
             .getBody();
     }
 
-    public Region update(Integer id, Region region) {
-        HttpEntity<Region> request = new HttpEntity<>(region);
+    public Country update(Integer id, Country country) {
+        HttpEntity<Country> request = new HttpEntity<>(country);
         return restTemplate
-            .exchange(url.concat("/" + id), HttpMethod.PUT, request, Region.class)
+            .exchange(url.concat("/" + id), HttpMethod.PUT, request, Country.class)
             .getBody();
     }
 

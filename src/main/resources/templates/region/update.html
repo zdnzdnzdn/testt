@@ -1,4 +1,3 @@
-<!-- Update Region Page -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +15,7 @@
     <div class="container mt-5">
         <h1 class="fw-bold">Update Region</h1>
         <form th:action="@{/region/update/{id}(id=${region.id})}" method="post" th:object="${region}">
+            <input type="hidden" name="_method" value="PUT"/>
             <div class="mb-3">
                 <label for="regionName" class="form-label">Name</label>
                 <input type="text" class="form-control" id="regionName" th:field="*{name}" required />

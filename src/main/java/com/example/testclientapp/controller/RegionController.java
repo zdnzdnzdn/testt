@@ -2,11 +2,8 @@ package com.example.testclientapp.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.testclientapp.entity.Region;
 import com.example.testclientapp.service.RegionService;
 
@@ -50,20 +47,13 @@ public class RegionController {
         return "region/update";
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public String update(@PathVariable Integer id, Region region) {
         regionService.update(id, region);
         return "redirect:/region";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteView(@PathVariable Integer id, Model model) {
-        Region region = regionService.getById(id);
-        model.addAttribute("region", region);
-        return "region/delete";
-    }
-
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         regionService.delete(id);
         return "redirect:/region";

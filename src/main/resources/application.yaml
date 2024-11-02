@@ -1,6 +1,14 @@
 spring:
     application:
         name: "Client App"
+
+    mvc:
+      hiddenmethod:
+        filter:
+          enabled: true    
         
 server:
   port: 9010
+
+  base:
+    url:  http://localhost:9001
