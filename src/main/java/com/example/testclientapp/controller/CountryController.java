@@ -3,9 +3,6 @@ package com.example.testclientapp.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-
 import com.example.testclientapp.entity.Country;
 import com.example.testclientapp.service.CountryService;
 import com.example.testclientapp.service.RegionService;
@@ -25,6 +22,7 @@ public class CountryController {
     @GetMapping
     public String getAll(Model model) {
         model.addAttribute("countries", countryService.getAll());
+        model.addAttribute("activePage", "country");
         return "country/index";
     } 
 
@@ -32,6 +30,7 @@ public class CountryController {
     public String getById(@PathVariable Integer id, Model model) {
         Country country = countryService.getById(id);
         model.addAttribute("country", country);
+        model.addAttribute("activePage", "country");
         return "country/detail";
     }
 
@@ -39,6 +38,7 @@ public class CountryController {
     public String createView(Model model) {
         model.addAttribute("country", new Country());
         model.addAttribute("regions", regionService.getAll()); 
+        model.addAttribute("activePage", "country");
         return "country/createform"; 
     }
     
@@ -46,6 +46,7 @@ public class CountryController {
     @GetMapping("/create-auto")
     public String createAutoView(Model model) {
         model.addAttribute("regions", regionService.getAll());
+        model.addAttribute("activePage", "country");
         return "country/createform-auto";
     }
 
@@ -67,6 +68,7 @@ public class CountryController {
         Country country = countryService.getById(id);  
         model.addAttribute("country", country);
         model.addAttribute("regions", regionService.getAll());
+        model.addAttribute("activePage", "country");
         return "country/update";
     }
 
@@ -80,6 +82,7 @@ public class CountryController {
     public String deleteView(@PathVariable Integer id, Model model) {
         Country country = countryService.getById(id);
         model.addAttribute("country", country);
+        model.addAttribute("activePage", "country");
         return "country/delete";
     }
 
@@ -92,8 +95,9 @@ public class CountryController {
     // with dto
     @GetMapping("/{id}/custom-response")
     public String getCountryCustomResponse(@PathVariable Integer id, Model model) {
-    CountryResponse countryResponse = countryService.getByIdCustomResponse(id);
-    model.addAttribute("countryResponse", countryResponse);
-    return "country/detail";
-}
+        CountryResponse countryResponse = countryService.getByIdCustomResponse(id);
+        model.addAttribute("countryResponse", countryResponse);
+        model.addAttribute("activePage", "country");
+        return "country/detail";
+    }
 }

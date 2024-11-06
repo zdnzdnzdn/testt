@@ -1,19 +1,14 @@
 <!-- Detail Region Page -->
 <!DOCTYPE html>
-<html lang="en">
+<html
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/main}"
+>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link
-      rel="shortcut icon"
-      href="/images/icon.png"
-      type="image/x-icon"
-    />
     <title>Detail Region</title>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-5" layout:fragment="content">
         <h1 class="fw-bold">Detail Region</h1>
         <div class="card mt-3">
             <div class="card-body">

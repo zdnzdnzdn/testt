@@ -18,12 +18,14 @@ public class RegionController {
     @GetMapping
     public String getAll(Model model) {
         model.addAttribute("regions", regionService.getAll());
+        model.addAttribute("activePage", "region");
         return "region/index";
     }
 
     @GetMapping("/create")
     public String createView(Model model) {
         model.addAttribute("region", new Region());
+        model.addAttribute("activePage", "region");
         return "region/createform";
     }
 
@@ -37,6 +39,7 @@ public class RegionController {
     public String getById(@PathVariable Integer id, Model model) {
         Region region = regionService.getById(id);
         model.addAttribute("region", region);
+        model.addAttribute("activePage", "region");
         return "region/detail";
     }
 
@@ -44,6 +47,7 @@ public class RegionController {
     public String updateView(@PathVariable Integer id, Model model) {
         Region region = regionService.getById(id);  
         model.addAttribute("region", region);
+        model.addAttribute("activePage", "region");
         return "region/update";
     }
 
