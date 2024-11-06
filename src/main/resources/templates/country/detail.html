@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,11 +34,12 @@
         <h1 class="fw-bold text-center">Detail Country</h1>
         <div class="card mt-3">
             <div class="card-body">
-                <h5 class="card-title" th:text="${country.name}"></h5>
-                <p class="card-text">ID: <span th:text="${country.id}"></span></p>
-                <p class="card-text">Code: <span th:text="${country.code}"></span></p>
-                <p class="card-text">Region: <span th:text="${country.region?.name}"></span></p>
-                <p class="card-text">Region (ID): <span th:text="${country.region?.name} + ' (' + ${country.region?.id} + ')'"></span></p>
+                <!-- with dto -->
+                <h5 class="card-title" th:text="${countryResponse.countryName}"></h5>
+                <p class="card-text">ID: <span th:text="${countryResponse.countryId}"></span></p>
+                <p class="card-text">Code: <span th:text="${countryResponse.countryCode}"></span></p>
+                <p class="card-text">Region: <span th:text="${countryResponse.regionName}"></span></p>
+                <p class="card-text">Region (ID): <span th:text="${countryResponse.regionName} + ' (' + ${countryResponse.regionId} + ')'"></span></p>
                 <div class="d-flex justify-content-end">
                     <a href="/country" class="btn btn-secondary">Back</a>
                 </div>

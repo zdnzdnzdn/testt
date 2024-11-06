@@ -57,7 +57,7 @@
                                     <td th:text="${country.name}"></td>
                                     <td th:text="${country.region?.name} + ' (' + ${country.region?.id} + ')'"></td>
                                     <td class="d-flex justify-content-center gap-3">
-                                        <a th:href="@{/country/detail/{id}(id=${country.id})}" class="btn btn-primary btn-sm">
+                                        <a th:href="@{/country/{id}/custom-response(id=${country.id})}" class="btn btn-primary btn-sm">
                                             <i class="bi bi-eye"></i> Detail
                                         </a>
                                         <a th:href="@{/country/update/{id}(id=${country.id})}" class="btn btn-warning btn-sm">
@@ -78,7 +78,10 @@
             </div>
         </div>
         <div class="d-flex justify-content-end mt-3">
-            <a href="/country/create" class="btn btn-success btn-sm fw-bold">Add Country</a>
+        <!--<a href="/country/create" class="btn btn-success btn-sm fw-bold me-2">Add Country</a> -->
+        
+        <!-- with dto -->
+            <a href="/country/create-auto" class="btn btn-primary btn-sm fw-bold">Add Country</a>
         </div>
     </section>
 
