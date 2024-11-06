@@ -59,8 +59,9 @@ public class RegionService {
             .getBody();
     }
 
-    public void delete(Integer id) {
-        restTemplate
-            .exchange(url.concat("/" + id), HttpMethod.DELETE, null, Void.class);
+    public Region delete(Integer id) {
+        return restTemplate
+          .exchange(url.concat("/" + id), HttpMethod.DELETE, null, Region.class)
+          .getBody();
+      }
     }
-}

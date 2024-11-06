@@ -3,85 +3,346 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{layout/main}"
 >
-<head>
-    <title>Countries</title>
-    <style>
-        /* Custom Styles */
-        body {
-            background-color: #f8f9fa;
-        }
-        .table {
-            border-radius: 0.5rem;
-            overflow: hidden;
-        }
-        tbody tr:hover {
-            background-color: #e9ecef;
-        }
-        .table th, .table td {
-            vertical-align: middle;
-        }
-        .btn i {
-            margin-right: 5px;
-        }
-        .card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-</head>
+  <head>
+    <!-- title web -->
+    <title>Country</title>
+  </head>
+  <body>
+    <!-- content -->
+    <section class="container" layout:fragment="content">
+      <div class="my-4 d-flex justify-content-between align-items-center">
+        <h1 class="fw-bold">List of Country</h1>
+        <button
+          type="button"
+          class="btn btn-success btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#create"
+        >
+          Add Country
+        </button>
+      </div>
 
-<body>
-    <!-- Content -->
-    <section class="container mt-5" layout:fragment="content">
-        <div class="my-4 text-center"> 
-            <h1 class="fw-bold">List of Countries</h1>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <table class="table table-bordered table-hover table-striped text-center">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th class="col-1">ID</th>
-                                    <th class="col-1">Code</th>
-                                    <th class="col-3">Name</th>
-                                    <th class="col-3">Region (Id)</th>
-                                    <th class="col-4">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="country : ${countries}">
-                                    <td th:text="${country.id}"></td>
-                                    <td th:text="${country.code}"></td>
-                                    <td th:text="${country.name}"></td>
-                                    <td th:text="${country.region?.name} + ' (' + ${country.region?.id} + ')'"></td>
-                                    <td class="d-flex justify-content-center gap-3">
-                                        <a th:href="@{/country/{id}/custom-response(id=${country.id})}" class="btn btn-primary btn-sm">
-                                            <i class="bi bi-eye"></i> Detail
-                                        </a>
-                                        <a th:href="@{/country/update/{id}(id=${country.id})}" class="btn btn-warning btn-sm">
-                                            <i class="bi bi-pencil"></i> Update
-                                        </a>
-                                        <form th:action="@{/country/delete/{id}(id=${country.id})}" method="post" style="display:inline;">
-                                            <input type="hidden" name="_method" value="DELETE"/>
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this country?')">
-                                                <i class="bi bi-trash"></i> Delete
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+      <table
+        id="tb-country"
+        class="table table-bordered table-hover table-striped"
+      >
+        <thead class="table-dark">
+          <tr>
+            <th class="col-1 text-center">Id</th>
+            <th class="col-2 text-center">Code</th>
+            <th class="col-3 text-center">Name</th>
+            <th class="col-3 text-center">Region</th>
+            <th class="col-3 text-center">Action</th>
+          </tr>
+        </thead>
+      </table>
+
+      <!-- modal create -->
+      <div
+        class="modal fade"
+        id="create"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="createLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 fw-bold" id="createLabel">
+                Create Country
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
-        </div>
-        <div class="d-flex justify-content-end mt-3">
-        <!--<a href="/country/create" class="btn btn-success btn-sm fw-bold me-2">Add Country</a> -->
+            <form>
+              <div class="modal-body">
+                <!-- code -->
+                <div class="input-group flex-nowrap mb-3">
+                  <span
+                    class="input-group-text fw-bold bg-primary bg-opacity-50"
+                    id="addon-wrapping"
+                    >Code</span
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Country Code"
+                    aria-label="code"
+                    aria-describedby="addon-wrapping"
+                    id="create-code"
+                    required
+                  />
+                </div>
 
-        <!-- with dto -->
-            <a href="/country/create-auto" class="btn btn-primary btn-sm fw-bold">Add Country</a>
+                <!-- name -->
+                <div class="input-group flex-nowrap mb-3">
+                  <span
+                    class="input-group-text fw-bold bg-primary bg-opacity-50"
+                    id="addon-wrapping"
+                    >Name</span
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Country Name"
+                    aria-label="name"
+                    aria-describedby="addon-wrapping"
+                    id="create-name"
+                    required
+                  />
+                </div>
+
+                <!-- region -->
+                <div class="input-group flex-nowrap">
+                  <span
+                    class="input-group-text fw-bold bg-primary bg-opacity-50"
+                    id="addon-wrapping"
+                    >Region</span
+                  >
+                  <select
+                    class="form-select"
+                    id="create-region"
+                    required
+                  >
+                    <option value="">Select Region</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  id="create-country"
+                  type="button"
+                  class="btn btn-success btn-sm"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
+
+      <!-- modal detail -->
+      <div
+        class="modal fade"
+        id="detail"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="detailLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 fw-bold" id="detailLabel">
+                Detail Country
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <!-- id -->
+              <div class="input-group flex-nowrap mb-3">
+                <span
+                  class="input-group-text fw-bold bg-primary bg-opacity-50"
+                  id="addon-wrapping"
+                  >Id</span
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="id"
+                  aria-describedby="addon-wrapping"
+                  id="detail-id"
+                  disabled
+                />
+              </div>
+
+              <!-- code -->
+              <div class="input-group flex-nowrap mb-3">
+                <span
+                  class="input-group-text fw-bold bg-primary bg-opacity-50"
+                  id="addon-wrapping"
+                  >Code</span
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="code"
+                  aria-describedby="addon-wrapping"
+                  id="detail-code"
+                  disabled
+                />
+              </div>
+
+              <!-- name -->
+              <div class="input-group flex-nowrap mb-3">
+                <span
+                  class="input-group-text fw-bold bg-primary bg-opacity-50"
+                  id="addon-wrapping"
+                  >Name</span
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="name"
+                  aria-describedby="addon-wrapping"
+                  id="detail-name"
+                  disabled
+                />
+              </div>
+
+              <!-- region -->
+              <div class="input-group flex-nowrap">
+                <span
+                  class="input-group-text fw-bold bg-primary bg-opacity-50"
+                  id="addon-wrapping"
+                  >Region</span
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-label="region"
+                  aria-describedby="addon-wrapping"
+                  id="detail-region"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary btn-sm"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- modal update -->
+      <div
+        class="modal fade"
+        id="update"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="updateLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 fw-bold" id="updateLabel">
+                Update Country
+              </ h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <form>
+              <div class="modal-body">
+                <!-- code -->
+                <div class="input-group flex-nowrap mb-3">
+                  <span
+                    class="input-group-text fw-bold bg-primary bg-opacity-50"
+                    id="addon-wrapping"
+                    >Code</span
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Country Code"
+                    aria-label="code"
+                    aria-describedby="addon-wrapping"
+                    id="update-code"
+                    required
+                  />
+                </div>
+
+                <!-- name -->
+                <div class="input-group flex-nowrap mb-3">
+                  <span
+                    class="input-group-text fw-bold bg-primary bg-opacity-50"
+                    id="addon-wrapping"
+                    >Name</span
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Country Name"
+                    aria-label="name"
+                    aria-describedby="addon-wrapping"
+                    id="update-name"
+                    required
+                  />
+                </div>
+
+                <!-- region -->
+                <div class="input-group flex-nowrap">
+                  <span
+                    class="input-group-text fw-bold bg-primary bg-opacity-50"
+                    id="addon-wrapping"
+                    >Region</span
+                  >
+                  <select
+                    class="form-select"
+                    id="update-region"
+                    required
+                  >
+                    <option value="">Select Region</option>
+                  </select>
+                </div>
+
+                <input type="hidden" id="update-id" />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  id="update-country"
+                  type="button"
+                  class="btn btn-success btn-sm"
+                >
+                  Save
+                </button>
+              </div>
+            </form> 
+          </div>
+        </div>
+      </div>
     </section>
-</body>
+
+    <div layout:fragment="js">
+      <script th:src="@{/js/country.js}"></script>
+    </div>
+  </body>
 </html>

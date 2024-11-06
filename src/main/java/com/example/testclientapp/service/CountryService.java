@@ -61,9 +61,15 @@ public class CountryService {
             .getBody();
     }
 
-    public void delete(Integer id) {
-        restTemplate
-            .exchange(url.concat("/" + id), HttpMethod.DELETE, null, Void.class);
+    public Country delete(Integer id) {
+        return restTemplate
+            .exchange(
+                url.concat("/" + id), 
+                HttpMethod.DELETE, 
+                null, 
+                Country.class
+            )
+            .getBody();
     }
 
     public CountryResponse getByIdCustomResponse(Integer id) {
