@@ -1,21 +1,21 @@
 // console.log("Region");
 
 $(document).ready(() => {
-    // Inisialisasi DataTable untuk tabel dengan id "tb-region"
+    
     $("#tb-region").DataTable({
       ajax: {
         method: "GET",
-        url: "/api/region", // URL API untuk mengambil data region
-        dataSrc: "", // Data source kosong karena response langsung berupa array
+        url: "/api/region", 
+        dataSrc: "", 
       },
-      columnDefs: [{ className: "text-center", targets: "_all" }], // Styling kolom tengah
+      columnDefs: [{ className: "text-center", targets: "_all" }], 
       columns: [
-        { data: "id" }, // Kolom ID
-        { data: "name" }, // Kolom Name
+        { data: "id" }, 
+        { data: "name" }, 
         {
           data: null,
           render: (data) => {
-            // Render kolom action buttons
+            
             return `
               <div class="d-flex gap-3 justify-content-center align-items-center">
                 <button
